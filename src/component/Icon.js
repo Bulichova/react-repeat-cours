@@ -1,0 +1,18 @@
+import React from 'react'
+import sprite from '../images/sprite.svg'
+export function Icon({ iconId, iconColor, width, height,iconClass }) {
+  return (
+    <>
+      {iconId && (
+        <svg fill={iconColor} width={width} height={height} className={`icon icon=${iconId} ${iconClass}`}>
+          <use xlinkHref={`${sprite}#${iconId}`}></use>
+        </svg>
+      )}
+    </>
+  )
+}
+Icon.defaultProps = {
+  iconColor: 'white',
+  width: '14px',
+  height: '14px',
+}
