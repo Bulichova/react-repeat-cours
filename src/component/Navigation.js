@@ -12,15 +12,15 @@ const Item = styled.li`
 function Navigation({ links }) {
   // console.log('links', links)
   const handleItemClick = () => {
-    console.log('item click')
+    // console.log('item click')
   }
   const handleLinkClick = (e) => {
     // console.log(e)
     // console.log('click')
-    console.log(e.target.to)
+    // console.log(e.target.to)
   }
   const handleLinkMouseEnter = (e) => {
-    console.log('enter')
+    // console.log('enter')
   }
   return (
     <nav>
