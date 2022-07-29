@@ -9,32 +9,56 @@ font-size: 18px;
 line-height: 1.56;
 padding: 8px 32px;
 border-radius:4px;
+:disabled {
+  background-color: red;
+}
+:not(:disabled):hover{
+  background-color: #fff;
+  color: #000;
+  transition: all 0.5s;
+}
 `
 
 const StyledButton = styled.button`
   ${commonStyles};
-  :hover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* :hover {
     background-color: #fff;
     color: #000;
     transition: all 0.5s;
-  }
+  } */
 `
 const StyledLinkButton = styled.a`
   ${commonStyles}
   text-decoration: underline;
 `
 
-export function Button({ type, label, handleClick }) {
+export function Button({ isDisabled, type, label, handleClick }) {
+  const disabled = isDisabled === 'undefined' ? true : isDisabled
+
   return (
-    <StyledButton type={type || 'button'} onClick={handleClick}>
+    <StyledButton
+      disabled={disabled}
+      type={type || 'button'}
+      onClick={handleClick}
+    >
       {label}
     </StyledButton>
   )
 }
-export function IconButton({iconId}) {
+export function IconButton({ isDisabled, iconId, type, label, handleClick }) {
+  const disabled = isDisabled === undefined ? false : isDisabled
+
   return (
-    <StyledButton>
-      <Icon iconId={iconId}/>
+    <StyledButton
+      disabled={disabled}
+      type={type || 'button'}
+      onClick={handleClick}
+    >
+      {label}
+      <Icon iconId={iconId} />
     </StyledButton>
   )
 }
