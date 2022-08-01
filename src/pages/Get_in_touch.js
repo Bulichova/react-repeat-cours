@@ -1,60 +1,67 @@
 import React, { useState, useEffect } from 'react'
 import { InputText } from '../component/Input'
 import { IconButton } from '../component/Button'
+import { setValidation } from '../helpers/validation'
+
+const errorMap = {
+  name: true,
+  email: true,
+  phone: true,
+  password: true,
+  confirmedPassword: true,
+}
 
 export default function Get_in_touch() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState({})
+  const [confirmedPassword, setConfirmedPassword] = useState(false)
+  const [errors, setErrors] = useState(errorMap)
   const [isDisabledSubmit, setIsDisabledSubmit] = useState(true)
-
   const [user, setUser] = useState({})
 
   useEffect(() => {
-    // console.log('name', name)
-    // console.log('email', email)
-    // console.log('phone', phone)
-    // console.log('password', password)
-    // console.log('error',error);
-  }, [name, email, phone, password, errors])
-
-  useEffect(() => {
-    // console.log('user', user)
-  }, [user])
-
-  useEffect(() => {
-    console.log('errors', errors)
+    const errorsValues = Object.values(errors)
+    console.log('errorsValues', errorsValues)
+    const isValid =
+      errorsValues?.length > 0 && errorsValues.every((err) => err === false)
+    console.log('isValid', isValid)
+    if (isValid) {
+      setIsDisabledSubmit(false)
+    } else {
+      setIsDisabledSubmit(true)
+    }
   }, [errors])
 
-  // useEffect(() => {
-  //   const errorsValues = Object.values(errors)
-  //   console.log('errorsValues', errorsValues)
-  //   const isValid = errorsValues ?.length > 0 && errorsValues.every((err)=>)
-  // })
-
-  const validateName = (name, value) => {
-    console.log('valid', value)
-    const rule = value.length > 3
-    if (rule) {
-      // console.log('valid', value)
-    } else {
-      // console.log('value is invalid')
-      setErrors((prev) => {
-        return { ...prev, [name]: false }
-      })
-    }
-  }
-
-  // const validateEmail = (name, value) => {
-  //    const rule = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
-
-  const handleInputChange = ({ target: { name, value } }) => {
-    console.log('name&value', name, value)
+  const validateForm = (name, value) => {
+    let rule
     switch (name) {
       case 'name':
-        validateName(value)
+        rule = value.length > 3
+        break
+      case 'email':
+        rule = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
+        break
+      case 'phone':
+        rule = !value.match(/^\d{9}$/)
+        break
+      case 'password':
+        rule = !!value.match(/^[A-Za-z]\w{7,14}$/)
+        break
+      case 'confirmedPassword':
+        rule = !errors?.password && value === password
+        break
+      default:
+        console.log('no rule')
+    }
+    setValidation(rule, name, setErrors)
+  }
+
+  const handleInputChange = ({ target: { name, value } }) => {
+    validateForm(name, value)
+    switch (name) {
+      case 'name':
         setName(value)
         break
       case 'email':
@@ -66,16 +73,29 @@ export default function Get_in_touch() {
       case 'password':
         setPassword(value)
         break
+      case 'confirmedPassword':
+        setConfirmedPassword(value)
+        break
       default:
         setErrors((prev) => {
           return { ...prev, unknownInput: 'Input is not valid' }
         })
     }
-    // setUser((prev) => {
-    //   return { ...prev, [name]: value }
-    // })
+  }
 
-    // setUser({ [name]: value })
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setUser((prev) => {
+      return {
+        ...prev,
+        name,
+        email,
+        phone,
+        password,
+        confirmedPassword,
+      }
+    })
+    console.log(user)
   }
 
   return (
@@ -105,7 +125,7 @@ export default function Get_in_touch() {
           handleChange={handleInputChange}
         />
         <InputText
-          name="confirmepassword"
+          name="confirmedPassword"
           placeholder="Confirme password"
           type="password"
           handleChange={handleInputChange}
@@ -114,10 +134,7 @@ export default function Get_in_touch() {
         <IconButton
           type="submit"
           label="register"
-          handleClick={(e) => {
-            e.preventDefault()
-            // console.log('click')
-          }}
+          handleClick={handleSubmit}
           isDisabled={isDisabledSubmit}
         />
       </form>

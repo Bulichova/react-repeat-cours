@@ -10,7 +10,7 @@ line-height: 1.56;
 padding: 8px 32px;
 border-radius:4px;
 :disabled {
-  background-color: red;
+  background-color: grey;
 }
 :not(:disabled):hover{
   background-color: #fff;
@@ -24,11 +24,6 @@ const StyledButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* :hover {
-    background-color: #fff;
-    color: #000;
-    transition: all 0.5s;
-  } */
 `
 const StyledLinkButton = styled.a`
   ${commonStyles}
@@ -36,7 +31,7 @@ const StyledLinkButton = styled.a`
 `
 
 export function Button({ isDisabled, type, label, handleClick }) {
-  const disabled = isDisabled === 'undefined' ? true : isDisabled
+  const disabled = isDisabled === undefined ? false : isDisabled
 
   return (
     <StyledButton
