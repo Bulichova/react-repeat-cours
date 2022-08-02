@@ -10,33 +10,23 @@ const Item = styled.li`
 `
 
 function Navigation({ links }) {
-  // console.log('links', links)
-  const handleItemClick = () => {
-    // console.log('item click')
-  }
-  const handleLinkClick = (e) => {
-    // console.log(e)
-    // console.log('click')
-    // console.log(e.target.to)
-  }
-  const handleLinkMouseEnter = (e) => {
-    // console.log('enter')
-  }
+  const handleItemClick = () => {}
+  const handleLinkClick = (e) => {}
+  const handleLinkMouseEnter = (e) => {}
   return (
     <nav>
       <List>
-        {links &&
-          links.map(({ id, label, path }) => (
-            <Item key={id} onClick={handleItemClick}>
-              <Link
-                to={`/${path}`}
-                onClick={handleLinkClick}
-                onMouseEnter={handleLinkMouseEnter}
-              >
-                {label}
-              </Link>
-            </Item>
-          ))}
+        {links?.map(({ id, label, path }) => (
+          <Item key={id} onClick={handleItemClick}>
+            <Link
+              to={`/${path}`}
+              onClick={handleLinkClick}
+              onMouseEnter={handleLinkMouseEnter}
+            >
+              {label}
+            </Link>
+          </Item>
+        ))}
       </List>
     </nav>
   )
