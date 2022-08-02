@@ -17,12 +17,12 @@ const HeaderContainer = styled(Container)`
   padding-bottom: 20px;
 `
 
-function Header({ links }) {
+function Header() {
   return (
     <StyledHeader>
       <HeaderContainer>
         <Logo color="black" />
-        <Navigation links={links} />
+        <Navigation />
       </HeaderContainer>
     </StyledHeader>
   )

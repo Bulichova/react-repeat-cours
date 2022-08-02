@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Button } from '../component/Button'
-import {InputText} from '../component/Input'
+import { InputText } from '../component/Input'
 
 const API_KEY = '563492ad6f917000010000019b12c0ae48b44b77908448361ebdac71'
 const Base_URL = 'https://api.pexels.com/v1/'
@@ -38,11 +38,11 @@ export default function What_we_do() {
       // console.log('url', url)
       fetch(url, options)
         .then((response) => {
-          // console.log('response', response)
+          console.log('response', response)
           return response.json()
         })
         .then((data) => {
-          // console.log('data', data)
+          console.log('data', data)
           return data.photos
         })
         .then((kittens) => {
@@ -53,9 +53,9 @@ export default function What_we_do() {
   }
   return (
     <>
-      <h1>What we do</h1>
+      <h1>{search || 'search'}</h1>
       <section>
-        <InputText placeholder= "enter value" handleChange={handleInputChange} />
+        <InputText placeholder="enter value" handleChange={handleInputChange} />
         <Button type="submit" label="search" handleClick={searchValue} />
         <ul>
           {kittens.map(({ src: { tiny }, alt, id }) => {

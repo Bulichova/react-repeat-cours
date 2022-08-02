@@ -1,3 +1,4 @@
+
 export const validateName = (name, value) => {
   const rule = value.length > 3
   setValidation(rule, name)

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { AppContext } from './contexts/AppContext'
+import { ThemeContext } from './contexts/ThemeContext'
 import Footer from './component/Footer'
 import Header from './component/Header'
 import { Button } from './component/Button'
@@ -9,6 +11,7 @@ import About_us from './pages/About_us'
 import Get_in_touch from './pages/Get_in_touch'
 import Our_Work from './pages/Our_Work'
 import What_we_do from './pages/What_we_do'
+import { allStyles } from './layout/styles'
 
 const navLinks = [
   { id: '1', label: 'Our work', path: 'our-work' },
@@ -30,12 +33,24 @@ const ButtonsWrapper = styled.div`
 `
 
 function App() {
+  const initialAppContext = useContext(AppContext)
+
   const [currentState, setCurrentState] = useState('start')
   const [userName, setUserName] = useState('Tanya')
   const [isOnline, setIsOnline] = useState(true)
+  const [currentAppContext, setCurrentAppContext] = useState(initialAppContext)
 
   useEffect(() => {
     // console.log('Use Effect Initial Load')
+    const context = setAppContext()
+    // console.log('context', context)
+    setCurrentAppContext((prev) => {
+      return {
+        ...prev,
+        ...context,
+      }
+    })
+    console.log('initialAppContext', initialAppContext)
   }, []) // first-render
 
   useEffect(() => {
@@ -45,6 +60,15 @@ function App() {
   useEffect(() => {
     // console.log('isOnline', isOnline)
   }, [isOnline])
+
+  function setAppContext() {
+    return {
+      navLinks,
+      user: {
+        name: 'Sandra',
+      },
+    }
+  }
 
   const updateState = () => {
     // console.log('click')
@@ -56,20 +80,24 @@ function App() {
   }
 
   return (
-    <PageWrapper>
-      <Header links={navLinks} />
-      <main style={{ flex: '1 0 auto' }}>
-        <Button label="click" handleClick={toogleStatusisOnline} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="about-us" element={<About_us />} />
-          <Route path="what-we-do" element={<What_we_do />} />
-          <Route path="our-work" element={<Our_Work />} />
-          <Route path="get-in-touch" element={<Get_in_touch />} />
-        </Routes>
-      </main>
-      <Footer />
-    </PageWrapper>
+    <AppContext.Provider value={currentAppContext}>
+      <ThemeContext.Provider value={allStyles}>
+        <PageWrapper>
+          <Header />
+          <main style={{ flex: '1 0 auto' }}>
+            <Button label="click" handleClick={toogleStatusisOnline} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="about-us" element={<About_us />} />
+              <Route path="what-we-do" element={<What_we_do />} />
+              <Route path="our-work" element={<Our_Work />} />
+              <Route path="get-in-touch" element={<Get_in_touch />} />
+            </Routes>
+          </main>
+          <Footer />
+        </PageWrapper>
+      </ThemeContext.Provider>
+    </AppContext.Provider>
   )
 }
 
