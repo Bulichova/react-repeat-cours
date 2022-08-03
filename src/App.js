@@ -12,6 +12,7 @@ import Get_in_touch from './pages/Get_in_touch'
 import Our_Work from './pages/Our_Work'
 import What_we_do from './pages/What_we_do'
 import { allStyles } from './layout/styles'
+import BurgerMenu from './component/BurgerMenu'
 
 const navLinks = [
   { id: '1', label: 'Our work', path: 'our-work' },
@@ -34,11 +35,15 @@ const ButtonsWrapper = styled.div`
 
 function App() {
   const initialAppContext = useContext(AppContext)
-
   const [currentState, setCurrentState] = useState('start')
   const [userName, setUserName] = useState('Tanya')
   const [isOnline, setIsOnline] = useState(true)
   const [currentAppContext, setCurrentAppContext] = useState(initialAppContext)
+
+  useEffect(() => {
+    console.log(window.outerWidth)
+    console.log(window.screen.width)
+  }, [])
 
   useEffect(() => {
     // console.log('Use Effect Initial Load')
@@ -50,7 +55,7 @@ function App() {
         ...context,
       }
     })
-    console.log('initialAppContext', initialAppContext)
+    // console.log('initialAppContext', initialAppContext)
   }, []) // first-render
 
   useEffect(() => {
@@ -82,9 +87,13 @@ function App() {
   return (
     <AppContext.Provider value={currentAppContext}>
       <ThemeContext.Provider value={allStyles}>
-        <PageWrapper>
-          <Header />
-          <main style={{ flex: '1 0 auto' }}>
+        <PageWrapper id="pageWrapper">
+          {window.screen.width > 679 ? (
+            <Header />
+          ) : (
+            <BurgerMenu parentId="pageWrapper" neighborId="main" />
+          )}
+          <main id="main" style={{ flex: '1 0 auto' }}>
             <Button label="click" handleClick={toogleStatusisOnline} />
             <Routes>
               <Route path="/" element={<Home />} />

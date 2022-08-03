@@ -31,8 +31,8 @@ const Item = styled.li`
 function Navigation() {
   const { navLinks, user } = useContext(AppContext)
   const { colors, styles } = useContext(ThemeContext)
-  console.log('colors', colors)
-  console.log('styles', styles)
+  // console.log('colors', colors)
+  // console.log('styles', styles)
 
   const handleItemClick = () => {}
   const handleLinkClick = (e) => {}
