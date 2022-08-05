@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react'
 import { AppContext } from './contexts/AppContext'
 import { ThemeContext } from './contexts/ThemeContext'
 import Footer from './component/Footer'
-import Header from './component/Header'
 import { Button } from './component/Button'
 import styled from 'styled-components'
 import { Routes, Route } from 'react-router-dom'
@@ -12,19 +11,12 @@ import Get_in_touch from './pages/Get_in_touch'
 import Our_Work from './pages/Our_Work'
 import What_we_do from './pages/What_we_do'
 import { allStyles } from './layout/styles'
-import BurgerMenu from './component/BurgerMenu'
-
-const navLinks = [
-  { id: '1', label: 'Our work', path: 'our-work' },
-  { id: '2', label: 'What we do', path: 'what-we-do' },
-  { id: '3', label: 'About us', path: 'about-us' },
-  { id: '4', label: 'Get in touch', path: 'get-in-touch' },
-]
 
 const PageWrapper = styled.div`
   display: flex;
   height: 100vh;
   flex-flow: column;
+  ${allStyles.styles.verticalScroll}
 `
 
 const ButtonsWrapper = styled.div`
@@ -32,6 +24,13 @@ const ButtonsWrapper = styled.div`
   flex-flow: row wrap;
   align-items: center;
 `
+const Login = () => {
+  return (
+    <>
+      <h2>Login Page</h2>
+    </>
+  )
+}
 
 function App() {
   const initialAppContext = useContext(AppContext)
@@ -41,8 +40,8 @@ function App() {
   const [currentAppContext, setCurrentAppContext] = useState(initialAppContext)
 
   useEffect(() => {
-    console.log(window.outerWidth)
-    console.log(window.screen.width)
+    // console.log(window.outerWidth)
+    // console.log(window.screen.width)
   }, [])
 
   useEffect(() => {
@@ -68,10 +67,9 @@ function App() {
 
   function setAppContext() {
     return {
-      navLinks,
-      user: {
-        name: 'Sandra',
-      },
+      // user: {
+      //   name: 'Sandra',
+      // },
     }
   }
 
@@ -88,19 +86,19 @@ function App() {
     <AppContext.Provider value={currentAppContext}>
       <ThemeContext.Provider value={allStyles}>
         <PageWrapper id="pageWrapper">
-          {window.screen.width > 679 ? (
-            <Header />
+          {/* {window.screen.width > 679 ? (
+            // <Header />
           ) : (
             <BurgerMenu parentId="pageWrapper" neighborId="main" />
-          )}
+          )} */}
           <main id="main" style={{ flex: '1 0 auto' }}>
-            <Button label="click" handleClick={toogleStatusisOnline} />
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route exact path="/" element={<Home />} />
               <Route path="about-us" element={<About_us />} />
               <Route path="what-we-do" element={<What_we_do />} />
               <Route path="our-work" element={<Our_Work />} />
               <Route path="get-in-touch" element={<Get_in_touch />} />
+              <Route path="login" element={<Login />} />
             </Routes>
           </main>
           <Footer />

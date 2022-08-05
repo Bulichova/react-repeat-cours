@@ -2,6 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { Button } from '../component/Button'
 import { InputText } from '../component/Input'
+import withLeftSideBar from '../hocs/withLeftSideBar'
+
 
 const API_KEY = '563492ad6f917000010000019b12c0ae48b44b77908448361ebdac71'
 const Base_URL = 'https://api.pexels.com/v1/'
@@ -13,7 +15,7 @@ const options = {
   },
 }
 
-export default function What_we_do() {
+ function What_we_do() {
   const [search, setSearch] = useState(null)
   const [kittens, setKittens] = useState([])
 
@@ -71,3 +73,5 @@ export default function What_we_do() {
     </>
   )
 }
+
+export default withLeftSideBar (What_we_do)

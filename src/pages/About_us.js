@@ -1,5 +1,8 @@
 import React from 'react'
+import withLeftSideBar from '../hocs/withLeftSideBar'
 
-export default function About_us() {
+function About_us() {
   return <h1>About us</h1>
 }
+
+export default withLeftSideBar(About_us)

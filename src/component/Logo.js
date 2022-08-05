@@ -4,7 +4,7 @@ import logo_black from '../images/logo-black.png'
 import { Link } from 'react-router-dom'
 // export const Logo = ({color})=><img src={color === 'white' ? logo_white : logo_black} alt="logo" />
 
-export const Logo = ({ color }) => {
+export const Logo = ({ color}) => {
   return (
     <Link to="/">
       <div>

@@ -11,7 +11,7 @@ const StyledHeader = styled.header`
 
 const HeaderContainer = styled(Container)`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding-top: 24px;
   padding-bottom: 20px;
@@ -22,7 +22,7 @@ function Header() {
     <StyledHeader>
       <HeaderContainer>
         <Logo color="black" />
-        <Navigation />
+        {/* <Navigation /> */}
       </HeaderContainer>
     </StyledHeader>
   )

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { InputText } from '../component/Input'
 import { IconButton } from '../component/Button'
 import { setValidation } from '../helpers/validation'
+import withLeftSideBar from '../hocs/withLeftSideBar'
 
 const errorMap = {
   name: true,
@@ -11,7 +12,7 @@ const errorMap = {
   confirmedPassword: true,
 }
 
-export default function Get_in_touch() {
+function Get_in_touch() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -141,3 +142,5 @@ export default function Get_in_touch() {
     </>
   )
 }
+
+export default withLeftSideBar(Get_in_touch)

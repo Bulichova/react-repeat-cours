@@ -1,9 +1,12 @@
 import React from 'react'
+import withLeftSideBar from '../hocs/withLeftSideBar'
 
-export default function Our_Work({ kittens }) {
+ function Our_Work({ kittens }) {
   return (
     <>
       <h1>Our Work</h1>
     </>
   )
 }
+
+export default  withLeftSideBar (Our_Work)
