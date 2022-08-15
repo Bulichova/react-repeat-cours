@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Container } from './styledComponents'
+import { getLocale } from '../i18n'
 
 const SectionWrapper = styled.section`
   padding-top: 90px;
@@ -50,9 +51,7 @@ export function Hero() {
   return (
     <SectionWrapper>
       <Container>
-        <HeroTitle>
-          We're a multi-disciplinary design studio that helps brands thrive.
-        </HeroTitle>
+        <HeroTitle>{getLocale('hero_title')}</HeroTitle>
         <ContentWrapper>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

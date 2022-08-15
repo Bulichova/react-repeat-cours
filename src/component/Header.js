@@ -22,6 +22,18 @@ function Header() {
     <StyledHeader>
       <HeaderContainer>
         <Logo color="black" />
+        <select
+          onChange={(e) => {
+            console.log('e', e.target)
+            console.dir(e.target)
+            console.log('value,e.target.value')
+            localStorage.setItem('lang',e.target.value)
+          }}
+        >
+          <option value="en">EN</option>
+          <option value="uk">UK</option>
+          <option value="ru">RU</option>
+        </select>
         {/* <Navigation /> */}
       </HeaderContainer>
     </StyledHeader>
