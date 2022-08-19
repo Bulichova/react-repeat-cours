@@ -1,18 +1,19 @@
-import * as locales from './locales'
+import * as localesModule from './locales'
 
-function getLangFromBrowser() {
-  return window.navigator.language
-}
+const locales = { ...localesModule }
+const {
+  navigator: { language, languages },
+} = window
 
-function checkLangFromBrowserList() {
-  // console.log('browser langs list', window.navigator.language)
-  // console.log('locales', locales)
-  return window.navigator.languages.find((lang) => {
-    // console.log('lang', lang)
-    // console.log('locales', locales[lang])
-    return locales[lang]
-  })
-}
+const LangFromBrowser = Object.keys(locales).find((localeCode) =>
+  language.includes(localeCode),
+)
+
+const LangFromBrowserList = Object.keys(locales).find((locale) =>
+  languages.find((lang) => lang).includes(locale),
+)
+
+console.log(LangFromBrowserList)
 
 function getLangFromLocalStorage() {
   return localStorage.getItem('lang')
@@ -21,37 +22,41 @@ function getLangFromLocalStorage() {
 function getInitLang() {
   let lsLang = getLangFromLocalStorage()
   lsLang = lsLang === 'ua' ? 'uk' : lsLang
-  // console.log('lsLang', lsLang)
-  if (locales[lsLang]) {
-    return lsLang
-  }
-
-  const browserLang = getLangFromBrowser()
-  // console.log('browserLang', browserLang)
-  // console.log(locales[browserLang])
-  if (locales[browserLang]) {
-    return browserLang
-  }
-
-  const checkLangFromBrowser = checkLangFromBrowserList()
-  if (locales[checkLangFromBrowser]) {
-    return checkLangFromBrowser
-  }
+  if (locales[lsLang]) return lsLang
+  if (LangFromBrowser) return LangFromBrowser
+  if (LangFromBrowserList) return LangFromBrowserList
   return 'en'
 }
 
 export const lang = getInitLang()
-console.log('lang', lang)
+// console.log('lang', lang)
 
 function getLocalesByLang(lang) {
   return locales[lang]
 }
 
 const currentLocales = getLocalesByLang(lang)
-console.log('currentLocales', currentLocales)
+// console.log('currentLocales', currentLocales)
 
 export function getLocale(key) {
   return currentLocales[key] || key
 }
-// console.log(getLocale('owr_work'))
-// console.log(getLocale('get_in_touch'))
+export const setSelectedLanguages = (e) => {
+  if (e.target.id === 'options-view-button') return
+  console.log('value', e.target.value)
+  localStorage.setItem('lang', e.target.value)
+  window.location.reload()
+
+  // if (e.target.id !== 'options-view-button') {
+  //   console.log('value', e.target.value)
+  //   localStorage.setItem('lang', e.target.value)
+  //   window.location.reload()
+  // }
+}
+
+export const availableLanguages = Object.keys(locales).map((langCode) => {
+  return {
+    langCode,
+    label: getLocale(`${langCode}_lang`),
+  }
+})
