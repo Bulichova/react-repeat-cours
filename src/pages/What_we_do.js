@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react'
 import { Button } from '../component/Button'
 import { InputText } from '../component/Input'
 import withLeftSideBar from '../hocs/withLeftSideBar'
-
+import { pexelsReducer } from '../redux/reducers'
+import { useDispatch } from 'react-redux'
+import { setSearchValueAction } from '../redux/actions'
 
 const API_KEY = '563492ad6f917000010000019b12c0ae48b44b77908448361ebdac71'
 const Base_URL = 'https://api.pexels.com/v1/'
@@ -15,7 +17,7 @@ const options = {
   },
 }
 
- function What_we_do() {
+function What_we_do() {
   const [search, setSearch] = useState(null)
   const [kittens, setKittens] = useState([])
 
@@ -26,10 +28,17 @@ const options = {
   useEffect(() => {
     // console.log('kittens', kittens)
   }, [kittens])
+   
+
+  const dispatch= useDispatch()
 
   const handleInputChange = (e) => {
     // console.log('value', e.target.value)
-    setSearch(e.target.value)
+    setSearch(e.target.value) //local state
+    // set to redux this value
+    // setSearchValueAction('')
+    // pexelReducer(setSearchValueAction)
+    dispatch(setSearchValueAction('Solomon'))
   }
 
   const searchValue = () => {
@@ -74,4 +83,4 @@ const options = {
   )
 }
 
-export default withLeftSideBar (What_we_do)
+export default withLeftSideBar(What_we_do)
