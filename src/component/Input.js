@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-
 const StyledInput = styled.input`
   padding: 10px 20px;
   color: blue;

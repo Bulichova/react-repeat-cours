@@ -2,11 +2,14 @@ import { createReducer } from '@reduxjs/toolkit'
 
 const initialState = { searchValue: 'kuku' }
 
-export const pexelsReducer = createReducer(initialState, (x) => {
-  x.addCase('set/searchValue', (state, action) => {
-    state.searchValue = action.payload
-  })
+export const pexelsReducer = createReducer(initialState, {
+  'set/searchValue': (state, action) => {
+    // console.log('state', state)
+    console.log('action', action)
+    return { ...state, searchValue: action.payload }
+  },
 })
+
 //REDUCER===function
 
 // function reducer(state = {}, action) {

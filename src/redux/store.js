@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { pexelReducer } from './reducers'
+import { pexelsReducer } from './reducers'
 
 //STATE =GLOBAL{}
 // const state = createStore(reducer) {
@@ -12,10 +12,10 @@ const preloadedState = {
 }
 
 export const globalStore = configureStore({
-  reducer: pexelReducer,
-//   middleware: () => {},
-//   devTools: '',
-//   preloadedState,
-//   enhancers: () => {},
+  reducer: pexelsReducer,
+  //   middleware: () => {},
+  //   devTools: '',
+  //   preloadedState,
+  //   enhancers: () => {},
 })
 // console.log('globalStore', globalStore)

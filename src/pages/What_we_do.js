@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import debounce from 'lodash.debounce'
 import { Button } from '../component/Button'
 import { InputText } from '../component/Input'
 import withLeftSideBar from '../hocs/withLeftSideBar'
@@ -28,18 +29,20 @@ function What_we_do() {
   useEffect(() => {
     // console.log('kittens', kittens)
   }, [kittens])
-   
 
-  const dispatch= useDispatch()
+  const dispatch = useDispatch()
 
-  const handleInputChange = (e) => {
+  // throttle(callback, delay)
+  // debounce(callback, delay)
+
+  const handleInputChange = debounce((e) => {
     // console.log('value', e.target.value)
     setSearch(e.target.value) //local state
     // set to redux this value
     // setSearchValueAction('')
     // pexelReducer(setSearchValueAction)
-    dispatch(setSearchValueAction('Solomon'))
-  }
+    dispatch(setSearchValueAction(e.target.value))
+  }, 1000)
 
   const searchValue = () => {
     if (search) {
