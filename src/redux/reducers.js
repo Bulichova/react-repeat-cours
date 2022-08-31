@@ -1,12 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit'
+import { setSearchValueAction, setImagesAction } from './actions'
 
-const initialState = { searchValue: 'kuku' }
+const initialState = { searchValue: '', images: [] }
 
 export const pexelsReducer = createReducer(initialState, {
-  'set/searchValue': (state, action) => {
+  [setSearchValueAction]: (state, action) => {
     // console.log('state', state)
     console.log('action', action)
     return { ...state, searchValue: action.payload }
+  },
+  [setImagesAction]: (state, action) => {
+    console.log('IMAGES', action.payload)
+    return { ...state, images: action.payload }
   },
 })
 

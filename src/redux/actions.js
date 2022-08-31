@@ -2,6 +2,10 @@ import { createAction } from '@reduxjs/toolkit'
 
 export const setSearchValueAction = createAction('set/searchValue')
 
+export const setImagesAction = createAction('set/images')
+
+
+
 // //ACTIONS
 
 // const action = {
