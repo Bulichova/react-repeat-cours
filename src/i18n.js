@@ -13,7 +13,7 @@ const LangFromBrowserList = Object.keys(locales).find((locale) =>
   languages.find((lang) => lang).includes(locale),
 )
 
-console.log(LangFromBrowserList)
+// console.log(LangFromBrowserList)
 
 function getLangFromLocalStorage() {
   return localStorage.getItem('lang')

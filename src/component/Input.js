@@ -19,7 +19,7 @@ const StyledInput = styled.input`
   }
 `
 
-export function InputText({ placeholder, handleChange, type, name }) {
+export function InputText({ placeholder, handleChange, type, name, inputRef }) {
   //   console.log(placeholder)
   //   console.log(handleChange)
   return (
@@ -28,6 +28,7 @@ export function InputText({ placeholder, handleChange, type, name }) {
       name={name}
       placeholder={placeholder}
       onChange={handleChange}
+      ref={inputRef}
     />
   )
 }
