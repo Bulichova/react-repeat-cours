@@ -34,6 +34,35 @@ const StyledSearch = styled.div`
     /* display: inline-block; */
   }
 `
+const StyledImegeItem = styled.li`
+  position: relative;
+  margin-left: 40px;
+  margin-bottom: 10px;
+  ::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 20px;
+    left: -30px;
+    border-radius: 50%;
+    background-color: ${({ color }) => color};
+  }
+`
+
+const StyledButonList = styled.ul`
+  display: flex;
+  flex-flow: row wrap;
+  li {
+    margin: 6px;
+  }
+`
+const StyledAuthorButton = styled.button`
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 2px solid;
+`
 
 const API_KEY = '563492ad6f917000010000019b12c0ae48b44b77908448361ebdac71'
 const Base_URL = 'https://api.pexels.com/v1/'
@@ -50,11 +79,35 @@ function What_we_do() {
   const dispatch = useDispatch()
   const search = useSelector(searchValueSelector)
   const page = useSelector(pageValueSelector)
-  const images = useSelector(getImagesSelector)
+  const imagesFromStorage = useSelector(getImagesSelector)
+  const [authors, setAuthors] = useState({})
+  const [imagesForRener, setImagesForRender] = useState(imagesFromStorage || [])
+  const [choosedAuthor, setChoosedAuthor] = useState('all')
 
   useEffect(() => {
-    // console.log('images', images)
-  }, [images])
+    if (choosedAuthor === 'all') {
+      setImagesForRender(imagesFromStorage)
+    } else {
+      const filteredImages = imagesFromStorage.filter((image) => {
+        return image.photographer === choosedAuthor
+      })
+      console.log('filteredImages', filteredImages)
+      setImagesForRender(filteredImages)
+    }
+  }, [choosedAuthor, imagesFromStorage])
+
+  useEffect(() => {
+    // console.log('imagesFromStorage', imagesFromStorage)
+    const authors = imagesFromStorage.map((image) => image.photographer)
+    // console.log('authors', authors)
+
+    const sortedAuthors = authors.reduce((memo, author) => {
+      !memo.hasOwnProperty(author) ? (memo[author] = 1) : (memo[author] += 1)
+      return memo
+    }, {})
+    // console.log('sortedAuthors', sortedAuthors)
+    setAuthors(sortedAuthors)
+  }, [imagesFromStorage])
 
   // throttle(callback, delay)
   // debounce(callback, delay)
@@ -74,6 +127,7 @@ function What_we_do() {
 
   const getFetch = (imagesAction, page = 0) => {
     if (!search) return
+    setChoosedAuthor('all')
     let currentPage = page + 1
     let params = `?query=${search}&orientation=portrait&size=smll&per_page=5&page=${currentPage}`
     const url = Base_URL + endPoint + params
@@ -83,6 +137,15 @@ function What_we_do() {
         dispatch(imagesAction(data.photos))
         dispatch(setPageValueAction(currentPage))
       })
+  }
+
+  const chooseAuthor = (e) => {
+    console.log('chooseAuthor', e.target.dataset.value)
+    setChoosedAuthor(e.target.dataset.value)
+  }
+
+  const isSelectedAuthor=()=>{
+    //selected autors button
   }
 
   return (
@@ -97,12 +160,40 @@ function What_we_do() {
           />
           <Button type="submit" label="search" handleClick={searchValue} />
         </StyledSearch>
+        <div>
+          <h3>Photographer</h3>
+          <StyledButonList>
+            <li key="all">
+              <StyledAuthorButton
+                onClick={chooseAuthor}
+                type="button"
+                data-value="all"
+              >
+                All
+              </StyledAuthorButton>
+            </li>
+
+            {Object.keys(authors).map((authorName) => {
+              return (
+                <li key={authorName}>
+                  <StyledAuthorButton
+                    onClick={chooseAuthor}
+                    type="button"
+                    data-value={authorName}
+                  >
+                    {authorName}
+                  </StyledAuthorButton>
+                </li>
+              )
+            })}
+          </StyledButonList>
+        </div>
         <StyledImagesList>
-          {images?.map(({ src: { tiny }, alt, id }) => {
+          {imagesForRener?.map(({ src: { tiny }, alt, id, avg_color }) => {
             return (
-              <li key={id}>
+              <StyledImegeItem key={id} color={avg_color}>
                 <img src={tiny} alt={alt} />
-              </li>
+              </StyledImegeItem>
             )
           })}
         </StyledImagesList>
